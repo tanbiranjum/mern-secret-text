@@ -1,0 +1,20 @@
+.container {
+  margin: 40px auto;
+  width: 40%;
+}
+
+.avatar {
+  height: 100px;
+  width: 100px;
+}
+
+.avatarContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}

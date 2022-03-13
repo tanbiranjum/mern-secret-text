@@ -1,0 +1,13 @@
+{
+  "name": "secret-text",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "npm run server-dev --prefix server",
+    "client": "npm start --prefix client"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

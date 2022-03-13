@@ -1,0 +1,27 @@
+.container {
+  width: 40%;
+  margin: 100px auto;
+  border: 1px solid block;
+}
+
+.avatar {
+  height: 100px;
+  width: 100px;
+}
+
+.avatarContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.icon {
+  height: 30px;
+  width: 30px;
+  color: green;
+}
