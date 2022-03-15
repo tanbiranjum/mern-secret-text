@@ -35,7 +35,7 @@ function App() {
           }
         />
         <Route
-          path="/inbox/:id"
+          path="/inbox"
           element={
             <RequireAuth>
               <Inbox />

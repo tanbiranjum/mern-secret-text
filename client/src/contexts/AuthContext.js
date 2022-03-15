@@ -24,9 +24,7 @@ const AuthContextProvider = ({ children }) => {
 
   return (
     <div>
-      {!isLoaded ? (
-        <h1>loading</h1>
-      ) : (
+      {isLoaded && (
         <AuthContext.Provider
           value={{ user, setUser, isAuthenticated, setIsAuthenticated }}
         >

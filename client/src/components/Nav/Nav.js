@@ -153,7 +153,7 @@ export const Nav = () => {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            Secret🤐 {`Hello ${user.nickName}`}
+            {/* Secret🤐 {`Hello ${user.nickName}`} */}
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           {isAuthenticated && (

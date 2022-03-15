@@ -2,7 +2,7 @@ const url = 'http://localhost:8000'
 
 const AppService = {
   getInbox: async (id) => {
-    const res = await fetch(`${url}/api/v1/inbox/${id}`, {
+    const res = await fetch(`${url}/api/v1/text/inbox/${id}`, {
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -26,3 +26,5 @@ const AppService = {
     return data
   },
 }
+
+export default AppService

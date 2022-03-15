@@ -13,7 +13,7 @@ const modalStyle = {
   p: 4,
 }
 
-export const ModalUI = ({modalOpen, setModalOpen}) => {
+export const ModalUI = ({ modalOpen, setModalOpen, data }) => {
   return (
     <Modal
       open={modalOpen}
@@ -25,10 +25,10 @@ export const ModalUI = ({modalOpen, setModalOpen}) => {
     >
       <Box sx={modalStyle}>
         <Typography id="modal-modal-title" variant="h6" component="h2">
-          Mr. Tanbir
+          {data?.nickName || 'Nick Name'}
         </Typography>
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          I'll be in your neighborhood doing errands this.
+          {data.text}
         </Typography>
       </Box>
     </Modal>

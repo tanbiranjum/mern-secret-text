@@ -14,7 +14,7 @@ export const Home = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/inbox')
+      navigate(`/inbox`)
     }
   })
   return (
@@ -24,7 +24,6 @@ export const Home = () => {
         <img src="/assets/images/feedback.webp" alt="feedback" />
       </div>
       <Button
-        loading
         variant="contained"
         size="large"
         color="primary"
