@@ -4,6 +4,7 @@ import helmet from 'helmet'
 import mongoSanitize from 'express-mongo-sanitize'
 import xss from 'xss-clean'
 import hpp from 'hpp'
+import cookieParser from 'cookie-parser'
 
 import './config.js'
 
@@ -32,9 +33,12 @@ app.use(xss())
 
 app.use(hpp())
 
+app.use(cookieParser())
+
 app.use(
   cors({
     origin: 'http://localhost:3000',
+    credentials: true,
   })
 )
 

@@ -99,7 +99,7 @@ export const Inbox = () => {
                 }}
               >
                 <ListItemAvatar>
-                  <Avatar alt="Profile Picture" src={person} />
+                  {/* <Avatar alt="Profile Picture" src={person} /> */}
                 </ListItemAvatar>
                 <ListItemText primary={primary} secondary={secondary} />
               </ListItem>

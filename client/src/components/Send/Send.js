@@ -9,8 +9,6 @@ import {
   ListItemButton,
   Divider,
   Typography,
-  Modal,
-  Box,
 } from '@mui/material'
 import { BsCheck2Circle } from 'react-icons/bs'
 import styles from './Send.module.css'

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useContext } from 'react'
 import {
   Toolbar,
   AppBar,
@@ -19,9 +19,14 @@ import {
 
 import { RiNotification4Fill } from 'react-icons/ri'
 
+import AuthService from '../../service/AuthService'
+
+import { AuthContext } from '../../contexts/AuthContext'
+
 import styles from './Nav.module.css'
 
 export const Nav = () => {
+  const { user, isAuthenticated, setIsAuthenticated } = useContext(AuthContext)
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
 
@@ -45,6 +50,15 @@ export const Nav = () => {
     setMobileMoreAnchorEl(event.currentTarget)
   }
 
+  const handleLogout = () => {
+    try {
+      AuthService.logout()
+      setIsAuthenticated(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const menuId = 'primary-search-account-menu'
   const renderMenu = (
     <Menu
@@ -64,6 +78,7 @@ export const Nav = () => {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </Menu>
   )
 
@@ -138,47 +153,51 @@ export const Nav = () => {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            Secret🤐
+            Secret🤐 {`Hello ${user.nickName}`}
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <BsFillChatLeftTextFill className={styles.icon} />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <BsFillPersonFill className={styles.icon} />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <BsThreeDots className={styles.icon} />
-            </IconButton>
-          </Box>
+          {isAuthenticated && (
+            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+              <IconButton
+                size="large"
+                aria-label="show 17 new notifications"
+                color="inherit"
+              >
+                <Badge badgeContent={17} color="error">
+                  <BsFillChatLeftTextFill className={styles.icon} />
+                </Badge>
+              </IconButton>
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <BsFillPersonFill className={styles.icon} />
+              </IconButton>
+            </Box>
+          )}
+          {isAuthenticated && (
+            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+              <IconButton
+                size="large"
+                aria-label="show more"
+                aria-controls={mobileMenuId}
+                aria-haspopup="true"
+                onClick={handleMobileMenuOpen}
+                color="inherit"
+              >
+                <BsThreeDots className={styles.icon} />
+              </IconButton>
+            </Box>
+          )}
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
+      {isAuthenticated && renderMobileMenu}
+      {isAuthenticated && renderMenu}
     </Box>
   )
 }

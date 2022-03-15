@@ -67,6 +67,14 @@ export const login = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, res)
 })
 
+export const logout = (req, res) => {
+  res.cookie('jwt', '', {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  })
+  res.status(200).json({ status: 'success' })
+}
+
 export const protect = catchAsync(async (req, res, next) => {
   let token
   if (
@@ -102,4 +110,45 @@ export const protect = catchAsync(async (req, res, next) => {
 
   req.user = user
   next()
+})
+
+export const isAuthenticated = catchAsync(async (req, res, next) => {
+  let token
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith('Bearer')
+  ) {
+    token = req.headers.authorization.split(' ')[1]
+  } else if (req.cookies) {
+    token = req.cookies.jwt
+  }
+
+  if (!token) {
+    return next(new AppError('You are not logged in', 401))
+  }
+
+  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET)
+
+  if (!decoded.id) {
+    return next(new AppError('Invalid token', 401))
+  }
+
+  const user = await User.findById(decoded.id)
+
+  if (!user) {
+    return next(new AppError('User does not exist! Please login again', 401))
+  }
+
+  if (user.changedPasswordAfter(decoded.iat)) {
+    return next(
+      new AppError('User recently changed password! Please login again', 401)
+    )
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      user,
+    },
+  })
 })
