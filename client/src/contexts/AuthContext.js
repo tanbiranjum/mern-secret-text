@@ -6,7 +6,7 @@ export const AuthContext = createContext()
 const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [isLoaded, setIsLoaded] = useState(true)
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
     const checkAuth = async () => {

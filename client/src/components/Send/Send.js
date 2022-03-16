@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import {
   Container,
   TextField,
@@ -13,11 +13,39 @@ import {
 import { BsCheck2Circle } from 'react-icons/bs'
 import styles from './Send.module.css'
 import Avatar from 'avataaars'
-
+import { useNavigate, useParams } from 'react-router-dom'
+import AppService from '../../service/AppService'
 import { ModalUI } from '../ModalUI/ModalUI'
+import { AuthContext } from '../../contexts/AuthContext'
 
 export const Send = () => {
+  const navigate = useNavigate()
+  const { id } = useParams()
+  const { user } = useContext(AuthContext)
   const [modalOpen, setModalOpen] = useState(false)
+
+  const checkSameUser = () => {
+    console.log(id, user._id)
+    if (id === user._id) {
+      navigate(`/inbox`)
+      return
+    }
+  }
+
+  useEffect(() => {
+    checkSameUser()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const message = e.target.elements.message.value
+    AppService.sendText({
+      sender: user._id,
+      receiver: id,
+      text: message,
+    })
+  }
   return (
     <div className={styles.container}>
       <Container sx={{ width: '100%' }}>
@@ -37,28 +65,24 @@ export const Send = () => {
             className={styles.avatar}
           />
         </div>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <TextField
             id="outlined-name"
-            label="Nick name"
-            sx={{ margin: '20px 0' }}
+            label="Message"
+            multiline
+            rows="3"
+            name="message"
           />
-          <TextField id="outlined-name" label="Message" multiline rows="3" />
+          <Button
+            variant="contained"
+            size="large"
+            fullWidth
+            sx={{ margin: '20px 0' }}
+            type="submit"
+          >
+            Send
+          </Button>
         </form>
-        <Button
-          variant="contained"
-          size="large"
-          fullWidth
-          sx={{ margin: '20px 0' }}
-        >
-          Send
-        </Button>
-
-        {/* <Grid container justifyContent="space-between" spacing={3}>
-          <Grid item></Grid>
-          <Grid item>
-          </Grid>
-        </Grid> */}
       </Container>
       <Container>
         <List>
@@ -112,7 +136,11 @@ export const Send = () => {
           <Divider />
         </List>
       </Container>
-      <ModalUI modalOpen={modalOpen} setModalOpen={setModalOpen} />
+      <ModalUI
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
+        data={{ nickName: 'Test', text: 'Hello' }}
+      />
     </div>
   )
 }

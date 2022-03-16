@@ -10,13 +10,13 @@ import { useNavigate } from 'react-router-dom'
 export const Home = () => {
   const navigate = useNavigate()
   const [modalOpen, setModalOpen] = useState(false)
-  const { isAuthenticated, user } = useContext(AuthContext)
+  // const { isAuthenticated, user } = useContext(AuthContext)
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate(`/inbox`)
-    }
-  })
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     navigate(`/inbox`)
+  //   }
+  // })
   return (
     <div className={styles.container}>
       <h1>Send your friend secret text!</h1>

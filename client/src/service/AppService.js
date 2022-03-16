@@ -13,10 +13,10 @@ const AppService = {
     const data = await res.json()
     return data
   },
-  sendText: async (text) => {
+  sendText: async (textData) => {
     const res = await fetch(`${url}/api/v1/text`, {
       method: 'POST',
-      body: JSON.stringify(text),
+      body: JSON.stringify(textData),
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
