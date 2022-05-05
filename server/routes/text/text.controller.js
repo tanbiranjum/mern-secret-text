@@ -32,7 +32,7 @@ export const getTextByUser = catchAsync(async (req, res, next) => {
 })
 
 export const inbox = catchAsync(async (req, res, next) => {
-  const text = await Text.find({ receiver: req.params.id })
+  const text = await Text.find({ receiver: req.params.id }).populate('receiver')
 
   if (!text) {
     return next(new AppError('No text found with that ID', 404))

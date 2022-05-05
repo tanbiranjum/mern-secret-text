@@ -12,8 +12,11 @@ const AuthContextProvider = ({ children }) => {
     const checkAuth = async () => {
       try {
         const res = await AuthService.isAuthenticated()
-        setUser(res.data.data.user)
-        setIsAuthenticated(res.isAuthenticated)
+        console.log(res)
+        if (res.isAuthenticated) {
+          setUser(res.data.data.user)
+          setIsAuthenticated(res.isAuthenticated)
+        }
         setIsLoaded(true)
       } catch (err) {
         console.log(err)

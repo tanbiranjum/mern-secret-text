@@ -1,15 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-import {
-  Container,
-  TextField,
-  Button,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemButton,
-  Divider,
-  Typography,
-} from '@mui/material'
+import { Container, TextField, Button, Alert, Snackbar } from '@mui/material'
 import { BsCheck2Circle } from 'react-icons/bs'
 import styles from './Send.module.css'
 import Avatar from 'avataaars'
@@ -23,6 +13,7 @@ export const Send = () => {
   const { id } = useParams()
   const { user } = useContext(AuthContext)
   const [modalOpen, setModalOpen] = useState(false)
+  const [alert, setAlert] = useState(false)
 
   const checkSameUser = () => {
     console.log(id, user._id)
@@ -45,6 +36,11 @@ export const Send = () => {
       receiver: id,
       text: message,
     })
+    setAlert(true)
+  }
+
+  const handleClose = () => {
+    setAlert(false)
   }
   return (
     <div className={styles.container}>
@@ -84,63 +80,11 @@ export const Send = () => {
           </Button>
         </form>
       </Container>
-      <Container>
-        <List>
-          <ListItem disableGutters>
-            <ListItemButton
-              size="full"
-              sx={{ padding: '10px 0' }}
-              onClick={() => {
-                setModalOpen(!modalOpen)
-              }}
-            >
-              <ListItemIcon>
-                <BsCheck2Circle className={styles.icon} />
-              </ListItemIcon>
-              <Typography>Mr. Tanbir</Typography>
-              {" — I'll be in your neighborhood doing errands this…"}
-            </ListItemButton>
-          </ListItem>
-          <Divider />
-          <ListItem disableGutters>
-            <ListItemButton
-              size="full"
-              sx={{ padding: '10px 0' }}
-              onClick={() => {
-                setModalOpen(!modalOpen)
-              }}
-            >
-              <ListItemIcon>
-                <BsCheck2Circle className={styles.icon} />
-              </ListItemIcon>
-              <Typography>Mr. Tanbir</Typography>
-              {" — I'll be in your neighborhood doing errands this…"}
-            </ListItemButton>
-          </ListItem>
-          <Divider />
-          <ListItem disableGutters>
-            <ListItemButton
-              size="full"
-              sx={{ padding: '10px 0' }}
-              onClick={() => {
-                setModalOpen(!modalOpen)
-              }}
-            >
-              <ListItemIcon>
-                <BsCheck2Circle className={styles.icon} />
-              </ListItemIcon>
-              <Typography>Mr. Tanbir</Typography>
-              {" — I'll be in your neighborhood doing errands this…"}
-            </ListItemButton>
-          </ListItem>
-          <Divider />
-        </List>
-      </Container>
-      <ModalUI
-        modalOpen={modalOpen}
-        setModalOpen={setModalOpen}
-        data={{ nickName: 'Test', text: 'Hello' }}
-      />
+      <Snackbar open={alert} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          This is a success message!
+        </Alert>
+      </Snackbar>
     </div>
   )
 }
